@@ -1,5 +1,42 @@
 # Development Guide
 
+## Branching Strategy
+
+This project follows a protected branch model with two main branches:
+
+- `master`: Production-ready code
+  - Protected branch
+  - Requires pull request reviews
+  - Must be up to date before merging
+  - Direct pushes are not allowed
+
+- `develop`: Integration branch for features
+  - Where feature branches are merged
+  - Testing ground for new features
+  - Should be stable but can contain work in progress
+
+### Feature Development Workflow
+
+1. Create a feature branch from `develop`:
+   ```powershell
+   git checkout -b feature/your-feature-name develop
+   ```
+
+2. Make your changes and commit them:
+   ```powershell
+   git add .
+   git commit -m "Description of your changes"
+   ```
+
+3. Push your feature branch and create a pull request:
+   ```powershell
+   git push -u origin feature/your-feature-name
+   ```
+
+4. Create a pull request to merge into `develop`
+5. After review and approval, merge into `develop`
+6. Once features are tested in `develop`, create a pull request to `master`
+
 ## Setting Up Development Environment
 
 1. Install development dependencies:
