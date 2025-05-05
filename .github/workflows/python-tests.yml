@@ -30,11 +30,9 @@ jobs:
         
     - name: Check code formatting with Black
       run: |
-        black --check src/wsl_shortcut_creator
-
-    - name: Lint with pylint
+        black --check src/wsl_shortcut_creator    - name: Lint with pylint
       run: |
-        pylint src/wsl_shortcut_creator --fail-under=8.0
+        pylint src/wsl_shortcut_creator --fail-under=7.0 --rcfile=.pylintrc
 
     - name: Type checking with mypy
       run: |

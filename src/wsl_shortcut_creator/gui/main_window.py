@@ -337,7 +337,7 @@ class MainWindow(QMainWindow):
             for search_path in search_paths:
                 cmd = f"wsl -- ls {search_path}"
                 logger.debug(f"Executing command: {cmd}")
-                result = subprocess.run(cmd, capture_output=True, text=True, shell=True)
+                result = subprocess.run(cmd, capture_output=True, text=True, shell=True, check=False)
 
                 if result.returncode == 0 and result.stdout.strip():
                     desktop_files = result.stdout.strip().split("\n")
