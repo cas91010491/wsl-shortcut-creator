@@ -27,10 +27,11 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
         pip install -e .
-        
-    - name: Check code formatting with Black
+          - name: Check code formatting with Black
       run: |
-        black --check src/wsl_shortcut_creator    - name: Lint with pylint
+        black --check src/wsl_shortcut_creator
+
+    - name: Lint with pylint
       run: |
         pylint src/wsl_shortcut_creator --fail-under=7.0 --rcfile=.pylintrc
 
