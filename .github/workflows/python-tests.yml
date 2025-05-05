@@ -1,51 +1,31 @@
-﻿name: Python Tests
-
+name: Python Tests
 on:
   push:
-    branches: [ master, develop ]
+    branches: [master, develop]
   pull_request:
-    branches: [ master, develop ]
+    branches: [master, develop]
 
 jobs:
   test:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-        
-    - name: Install dependencies
-      run: |
+    - run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
         pip install -e .
-        
-    - name: Check code formatting with Black
-      run: |
-        black --check src/wsl_shortcut_creator
-
-    - name: Lint with pylint
-      run: |
-        pylint src/wsl_shortcut_creator --fail-under=7.0 --rcfile=.pylintrc
-
-    - name: Type checking with mypy
-      run: |
-        mypy src/wsl_shortcut_creator
-
-    - name: Run tests with pytest and coverage
-      run: |
-        pytest tests --cov=src/wsl_shortcut_creator --cov-report=xml
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+    - run: black --check src/wsl_shortcut_creator
+    - run: pylint src/wsl_shortcut_creator --fail-under=7.0 --rcfile=.pylintrc
+    - run: mypy src/wsl_shortcut_creator
+    - run: pytest tests --cov=src/wsl_shortcut_creator --cov-report=xml
+    - uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         flags: unittests
