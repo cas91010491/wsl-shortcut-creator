@@ -1,29 +1,30 @@
 """Constants and styles for the UI components."""
+
 from typing import Dict
 
 # Define color scheme
 COLORS: Dict[str, str] = {
-    'primary': '#2196F3',      # Material Blue
-    'secondary': '#FFC107',    # Material Amber
-    'success': '#4CAF50',      # Material Green
-    'danger': '#F44336',       # Material Red
-    'background': '#FFFFFF',   # White
-    'text': '#212121',        # Dark Grey
-    'disabled': '#9E9E9E'     # Grey
+    "primary": "#2196F3",  # Material Blue
+    "secondary": "#FFC107",  # Material Amber
+    "success": "#4CAF50",  # Material Green
+    "danger": "#F44336",  # Material Red
+    "background": "#FFFFFF",  # White
+    "text": "#212121",  # Dark Grey
+    "disabled": "#9E9E9E",  # Grey
 }
 
 # Define selection modes
 SELECTION_MODE: Dict[str, int] = {
-    'no_selection': 0,
-    'single': 1,
-    'multi': 2,
-    'extended': 3,
-    'contiguous': 4
+    "no_selection": 0,
+    "single": 1,
+    "multi": 2,
+    "extended": 3,
+    "contiguous": 4,
 }
 
 # Define styles
 STYLES: Dict[str, str] = {
-    'button': f"""
+    "button": f"""
         QPushButton {{
             background-color: {COLORS['primary']};
             color: white;
@@ -42,7 +43,7 @@ STYLES: Dict[str, str] = {
             background-color: {COLORS['disabled']};
         }}
     """,
-    'danger_button': f"""
+    "danger_button": f"""
         QPushButton {{
             background-color: {COLORS['danger']};
             color: white;
@@ -58,7 +59,7 @@ STYLES: Dict[str, str] = {
             background-color: #B71C1C;
         }}
     """,
-    'list': f"""
+    "list": f"""
         QListWidget {{
             background-color: white;
             border: 1px solid #BDBDBD;
@@ -79,7 +80,7 @@ STYLES: Dict[str, str] = {
             border-radius: 2px;
         }}
     """,
-    'label': f"""
+    "label": f"""
         QLabel {{
             color: {COLORS['text']};
             font-size: 14px;
@@ -87,7 +88,7 @@ STYLES: Dict[str, str] = {
             margin-bottom: 8px;
         }}
     """,
-    'status_label': f"""
+    "status_label": f"""
         QLabel {{
             color: {COLORS['text']};
             font-size: 12px;
@@ -95,5 +96,5 @@ STYLES: Dict[str, str] = {
             background-color: #F5F5F5;
             border-radius: 4px;
         }}
-    """
+    """,
 }

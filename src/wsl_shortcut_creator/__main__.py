@@ -13,13 +13,13 @@ The application allows users to:
 
 Example:
     To run the application directly:
-    
+
     ```python
     python main.py
     ```
-    
+
     Or after installation:
-    
+
     ```bash
     wsl-shortcuts
     ```
@@ -36,8 +36,7 @@ import logging
 
 # Configure root logger
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -50,32 +49,39 @@ except ImportError as e:
     logger.error(f"Failed to import required module: {e}")
     sys.exit(1)
 
+
 def main():
     """Main entry point for the application."""
     try:
         # Create Qt application
         app = QApplication(sys.argv)
         app.setApplicationName("WSL Shortcut Creator")
-        
+
         # Set application icon
-        icon_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'images', 'Logo.ico')
+        icon_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "resources",
+            "images",
+            "Logo.ico",
+        )
         if os.path.exists(icon_path):
             app.setWindowIcon(QIcon(icon_path))
         else:
             logger.warning(f"Application icon not found at {icon_path}")
-        
+
         # Create and show main window
         window = MainWindow()
         window.show()
-        
+
         # Start event loop
         return_code = app.exec_()
         logger.info("Application exiting normally")
         return return_code
-        
+
     except Exception as e:
         logger.error(f"Fatal error: {e}", exc_info=True)
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
