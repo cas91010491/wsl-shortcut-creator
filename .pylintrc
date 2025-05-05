@@ -1,0 +1,31 @@
+[MASTER]
+max-line-length = 100
+max-attributes = 10
+
+[MESSAGES CONTROL]
+disable=
+    C0111, # missing-docstring (handled by other rules)
+    W1203, # logging-fstring-interpolation (we'll keep f-strings for readability)
+    R0902, # too-many-instance-attributes (increased in max-attributes)
+    R1702, # too-many-nested-blocks (GUI code can be complex)
+
+[BASIC]
+good-names=
+    e,
+    i,
+    id,
+    qt,
+    Qt,
+    ex,
+    fp,
+    ws
+
+[REPORTS]
+output-format=text
+reports=no
+
+[FORMAT]
+max-line-length=100
+
+[LOGGING]
+logging-format-style=new

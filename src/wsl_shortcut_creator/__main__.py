@@ -46,7 +46,7 @@ try:
     from PyQt5.QtWidgets import QApplication
     from PyQt5.QtGui import QIcon
 except ImportError as e:
-    logger.error(f"Failed to import required module: {e}")
+    logger.error("Failed to import required module: %s", e)
     sys.exit(1)
 
 
