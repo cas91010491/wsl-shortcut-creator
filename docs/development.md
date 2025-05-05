@@ -78,6 +78,22 @@ This project follows:
 - PEP 8 style guide
 - Type hints for all function parameters and returns
 - Docstrings for all modules, classes, and functions
+- Black code formatting
+
+Before committing code, always run:
+```powershell
+# Format code with Black
+black src/wsl_shortcut_creator
+
+# Run type checking
+mypy src/wsl_shortcut_creator
+
+# Run linting
+pylint src/wsl_shortcut_creator
+
+# Run tests
+pytest tests
+```
 
 ## Running Style Checks
 
