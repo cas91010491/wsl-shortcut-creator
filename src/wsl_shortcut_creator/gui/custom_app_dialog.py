@@ -1,26 +1,27 @@
-from typing import Dict, Optional, TypedDict
-from PyQt5.QtWidgets import (
-    QDialog,
-    QVBoxLayout,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QPushButton,
-    QFileDialog,
-)
+"""Dialog for adding custom applications."""
+
+import os
+import logging
+from typing import Optional, TypedDict, Any
+
+from PIL import Image
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QFileDialog
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-import os
-from PIL import Image
-import logging
+
+# Silence false positives from type checker for PyQt5
+Qt = Any  # type: ignore
 
 # Setup module logger
 logger = logging.getLogger(__name__)
 
 
-class AppInfo(TypedDict):
-    """Type definition for application information dictionary"""
+# Qt flag type hints
+WindowContextHelpButtonHint = getattr(Qt, 'WindowContextHelpButtonHint')
 
+
+class AppInfo(TypedDict, total=False):
+    """Type information for a custom application."""
     name: str
     command: str
     icon: Optional[str]
@@ -50,6 +51,7 @@ class CustomAppDialog(QDialog):
             self.setWindowIcon(QIcon(icon_path))
             logger.debug(f"Set dialog icon from {icon_path}")
 
+        self.icon_path: Optional[str] = None
         self.setup_ui()
 
     def setup_ui(self) -> None:
@@ -168,34 +170,23 @@ class CustomAppDialog(QDialog):
         # Set minimum size
         self.setMinimumWidth(400)
 
-    def convert_to_ico(self, image_path):
-        """Convert image to ICO format if needed"""
+    def convert_to_ico(self, image_path: str) -> Optional[str]:
+        """Convert an image to ICO format."""
         try:
             if image_path.lower().endswith(".ico"):
                 return image_path
 
-            # Create icons directory if it doesn't exist
-            icons_dir = os.path.expandvars("%LOCALAPPDATA%\\WSL Shortcuts\\icons")
-            os.makedirs(icons_dir, exist_ok=True)
-
-            # Generate output path
             base_name = os.path.splitext(os.path.basename(image_path))[0]
-            ico_path = os.path.join(icons_dir, f"{base_name}.ico")
+            ico_path = os.path.join(os.path.dirname(image_path), f"{base_name}.ico")
 
-            # Convert image to ICO
             with Image.open(image_path) as img:
-                # Convert to RGBA if needed
-                if img.mode != "RGBA":
-                    img = img.convert("RGBA")
-
-                # Resize to standard icon sizes
-                icon_sizes = [(16, 16), (32, 32), (48, 48), (64, 64), (128, 128)]
-                img.save(ico_path, format="ICO", sizes=icon_sizes)
-
-            return ico_path
+                icon = img.copy()
+                icon.save(ico_path, format="ICO")
+                logger.info(f"Converted {image_path} to ICO format: {ico_path}")
+                return ico_path
 
         except Exception as e:
-            print(f"Error converting image: {e}")
+            logger.error(f"Error converting image to ICO: {e}")
             return None
 
     def browse_icon(self) -> None:

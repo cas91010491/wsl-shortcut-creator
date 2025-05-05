@@ -1,8 +1,12 @@
 """Main window for the WSL Shortcut Creator application."""
 
+import os
+import logging
+import subprocess
 from typing import Dict, Optional, Union, TypedDict
 
-from PyQt5.QtWidgets import (
+# PyQt5 type: ignore comments to suppress no-name-in-module errors
+from PyQt5.QtWidgets import (  # type: ignore
     QMainWindow,
     QWidget,
     QVBoxLayout,
@@ -12,12 +16,8 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QAbstractItemView,
 )
-from PyQt5.QtCore import QTimer
-from PyQt5.QtGui import QIcon
-
-import os
-import logging
-import subprocess
+from PyQt5.QtCore import QTimer  # type: ignore
+from PyQt5.QtGui import QIcon  # type: ignore
 
 from .ui_constants import COLORS, STYLES
 from .custom_app_dialog import AppInfo, CustomAppDialog
@@ -237,11 +237,11 @@ class MainWindow(QMainWindow):
                     self.update_status(
                         "Created shortcuts folder - ready to add shortcuts"
                     )
-                except Exception as e:
+                except OSError as e:
                     logger.error(f"Error creating directory: {e}")
                     self.update_status(f"Could not create shortcuts folder: {e}", True)
 
-        except Exception as e:
+        except (OSError, FileNotFoundError) as e:
             error_msg = f"Error loading shortcuts: {str(e)}"
             logger.error(error_msg, exc_info=True)
             self.update_status(error_msg, True)
@@ -481,7 +481,10 @@ class MainWindow(QMainWindow):
                 with open("create_shortcut.vbs", "w") as f:
                     if is_desktop_file:
                         # For .desktop files, use BAMF_DESKTOP_FILE_HINT
-                        args = f'-d {self.distro_name} --cd ""~"" -- env BAMF_DESKTOP_FILE_HINT={app_path} {app_name.lower()}'
+                        args = (
+                            f'-d {self.distro_name} --cd ""~"" -- '
+                            f'env BAMF_DESKTOP_FILE_HINT={app_path} {app_name.lower()}'
+                        )
                     else:
                         # For custom applications, directly execute the command
                         args = f'-d {self.distro_name} --cd ""~"" -- {app_path}'
