@@ -7,11 +7,26 @@
 
 ## Installation Steps
 1. Clone the repository
-2. Install the required dependencies:
+2. Run the build script to set up the virtual environment and install dependencies:
    ```powershell
-   pip install -r requirements.txt
+   .\scripts\build.ps1
    ```
 3. Run the application:
    ```powershell
-   python -m wsl_shortcut_creator
+   .\scripts\run_app.ps1
    ```
+
+The build script will:
+- Create a Python virtual environment (`.venv` by default)
+- Install all required dependencies
+- Install the package in development mode
+
+To clean and rebuild:
+```powershell
+.\scripts\build.ps1 -Clean
+```
+
+For a release build (without dev dependencies):
+```powershell
+.\scripts\build.ps1 -Release
+```

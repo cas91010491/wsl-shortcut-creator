@@ -2,20 +2,32 @@
 
 ## Setting Up Development Environment
 
-1. Install development dependencies:
+1. Create the development environment and install all dependencies:
    ```powershell
-   pip install -r requirements-dev.txt
+   .\scripts\build.ps1
+   ```
+   This will:
+   - Create a Python virtual environment (`.venv` by default)
+   - Install all required dependencies
+   - Install development dependencies
+   - Install the package in development mode
+
+2. To clean and rebuild the environment:
+   ```powershell
+   .\scripts\build.ps1 -Clean
    ```
 
-2. Run tests:
+3. Run tests:
    ```powershell
    .\scripts\run_tests.ps1
    ```
 
-3. Run tests with coverage:
+4. Run tests with coverage:
    ```powershell
    .\scripts\run_tests.ps1 -Coverage
    ```
+
+Note: All commands will automatically use the virtual environment created by the build script.
 
 ## Project Structure
 
@@ -23,7 +35,6 @@
   - `__main__.py`: Application entry point
   - `config/`: Configuration management
   - `gui/`: GUI components
-  - `utils/`: Utility functions
 - `tests/`: Test files
 - `docs/`: Documentation
 - `scripts/`: Build and utility scripts
@@ -44,8 +55,19 @@ This project follows:
 
 ## Running Style Checks
 
+These commands will run using the virtual environment:
+
 ```powershell
+# Activate the virtual environment first (if not already activated)
+. .\.venv\Scripts\Activate.ps1
+
+# Run style checks
 python -m pylint src/wsl_shortcut_creator
 python -m black src/wsl_shortcut_creator
 python -m mypy src/wsl_shortcut_creator
+
+# Deactivate when done (optional)
+deactivate
 ```
+
+Note: The build script installs all necessary development tools in the virtual environment.
