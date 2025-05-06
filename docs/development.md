@@ -23,7 +23,6 @@
   - `__main__.py`: Application entry point
   - `config/`: Configuration management
   - `gui/`: GUI components
-  - `utils/`: Utility functions
 - `tests/`: Test files
 - `docs/`: Documentation
 - `scripts/`: Build and utility scripts
