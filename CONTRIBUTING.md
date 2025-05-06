@@ -54,18 +54,27 @@ Thank you for your interest in contributing to WSL Shortcut Creator! This docume
 - Include type hints for all functions
 - Write docstrings for all modules, classes, and functions
 - Maintain test coverage (aim for 80%+)
-- Run style checks before committing:
+- Run style checks before committing (within virtual environment):
   ```powershell
+  # Style checks will run in the virtual environment created by build.ps1
+  . .\.venv\Scripts\Activate.ps1
   python -m pylint src/wsl_shortcut_creator
   python -m black src/wsl_shortcut_creator
   python -m mypy src/wsl_shortcut_creator
+  deactivate
   ```
 
 ### Testing Requirements
 - Write tests for all new features
 - Update existing tests when modifying features
+- Set up development environment first:
+  ```powershell
+  # First time setup or clean rebuild
+  .\scripts\build.ps1 -Clean
+  ```
 - Run the full test suite before creating PR:
   ```powershell
+  # Tests will run in the virtual environment
   .\scripts\run_tests.ps1 -Coverage
   ```
 
