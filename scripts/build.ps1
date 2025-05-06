@@ -1,7 +1,8 @@
 # Build script for WSL Shortcut Creator
 param(
     [switch]$Clean,
-    [switch]$Release
+    [switch]$Release,
+    [string]$VenvPath = ".venv"
 )
 
 # Clean build artifacts if requested
@@ -10,7 +11,30 @@ if ($Clean) {
     Get-ChildItem -Path "src" -Filter "__pycache__" -Recurse | Remove-Item -Recurse -Force
     if (Test-Path "build") { Remove-Item "build" -Recurse -Force }
     if (Test-Path "dist") { Remove-Item "dist" -Recurse -Force }
+    if (Test-Path $VenvPath) { 
+        Write-Host "Removing existing virtual environment..."
+        Remove-Item $VenvPath -Recurse -Force 
+    }
 }
+
+# Create and activate virtual environment
+Write-Host "Setting up Python virtual environment..."
+if (-not (Test-Path $VenvPath)) {
+    python -m venv $VenvPath
+}
+
+# Get the path to the virtual environment's activate script
+$ActivatePath = Join-Path $VenvPath "Scripts\Activate.ps1"
+if (-not (Test-Path $ActivatePath)) {
+    throw "Virtual environment activation script not found at: $ActivatePath"
+}
+
+# Activate the virtual environment
+. $ActivatePath
+
+# Upgrade pip in the virtual environment
+Write-Host "Upgrading pip..."
+python -m pip install --upgrade pip
 
 # Install dependencies
 Write-Host "Installing dependencies..."
@@ -31,3 +55,6 @@ if (-not $Release) {
     Write-Host "Running tests..."
     python -m pytest tests
 }
+
+# Deactivate virtual environment (optional since the script is ending)
+deactivate
