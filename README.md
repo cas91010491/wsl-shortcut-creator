@@ -13,5 +13,8 @@ A Windows application that helps manage and create shortcuts for WSL GUI applica
 - [Usage Guide](docs/usage.md)
 - [Development Guide](docs/development.md)
 
+## ChangeLog
+- [Change Log](CHANGELOG.md)
+
 ## Requirements
 See [requirements.txt](requirements.txt) for the full list of dependencies.
